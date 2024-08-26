@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Slf4j
 public class BeanUtilsTest {
@@ -144,6 +145,23 @@ public class BeanUtilsTest {
     child1.setAge(123);
     Assert.assertEquals(child1, BeanUtils.copyPropertiesIgnore(child, Child.class, binary -> "_a".equals(binary.getF1()), "name"));
   }
+
+  @Test
+  public void test14() {
+    Child[] children1 = BeanUtils.copyProperties((Child[]) null, Child.class);
+    Assert.assertEquals("[]", Arrays.toString(children1));
+  }
+
+  @Test
+  public void test15() {
+    Child child = new Child();
+    child.setAge(123);
+    child.setName("abc");
+    child.set_a('a');
+    Set<String> strings = BeanUtils.extractPropertyName(child, false, o -> true, "name");
+    System.out.println(strings);
+  }
+
 
   @Setter
   @Getter

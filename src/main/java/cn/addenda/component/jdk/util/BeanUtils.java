@@ -22,11 +22,17 @@ import java.util.function.Predicate;
 public class BeanUtils {
 
   public static <T> T copyProperties(Object source, T target) {
+    if (source == null) {
+      return target;
+    }
     org.springframework.beans.BeanUtils.copyProperties(source, target);
     return target;
   }
 
   public static <T> T copyPropertiesOnly(Object source, T target, Predicate<Binary<String, Object>> predicate, String... onlyProperties) {
+    if (source == null) {
+      return target;
+    }
     Set<String> ignorePropertyNames = extractPropertyName(source, true, predicate, onlyProperties);
     String[] result = new String[ignorePropertyNames.size()];
     org.springframework.beans.BeanUtils.copyProperties(source, target, ignorePropertyNames.toArray(result));
@@ -34,10 +40,16 @@ public class BeanUtils {
   }
 
   public static <T> T copyPropertiesOnly(Object source, T target, String... onlyProperties) {
+    if (source == null) {
+      return target;
+    }
     return copyPropertiesOnly(source, target, o -> false, onlyProperties);
   }
 
   public static <T> T copyPropertiesIgnore(Object source, T target, Predicate<Binary<String, Object>> predicate, String... ignoreProperties) {
+    if (source == null) {
+      return target;
+    }
     Set<String> ignorePropertyNames = extractPropertyName(source, false, predicate, ignoreProperties);
     String[] result = new String[ignorePropertyNames.size()];
     org.springframework.beans.BeanUtils.copyProperties(source, target, ignorePropertyNames.toArray(result));
@@ -45,48 +57,69 @@ public class BeanUtils {
   }
 
   public static <T> T copyPropertiesIgnore(Object source, T target, String... ignoreProperties) {
+    if (source == null) {
+      return target;
+    }
     return copyPropertiesIgnore(source, target, o -> false, ignoreProperties);
   }
 
   public static <T> T copyPropertiesIgnoreNull(Object source, T target, String... ignoreProperties) {
+    if (source == null) {
+      return target;
+    }
     return copyPropertiesIgnore(source, target, BeanUtils::ifNull, ignoreProperties);
   }
 
   public static <T> T copyPropertiesIgnoreBlank(Object source, T target, String... ignoreProperties) {
+    if (source == null) {
+      return target;
+    }
     return copyPropertiesIgnore(source, target, BeanUtils::ifBlank, ignoreProperties);
   }
 
   public static <T, S> T copyProperties(S source, Class<T> clazz) {
     return Optional.ofNullable(source)
             .map(s -> copyProperties(source, newInstance(clazz)))
-            .orElse(null);
+            .orElse(newInstance(clazz));
   }
 
   public static <T> T copyPropertiesOnly(Object source, Class<T> clazz, Predicate<Binary<String, Object>> predicate, String... onlyProperties) {
     return Optional.ofNullable(source)
             .map(s -> copyPropertiesOnly(source, newInstance(clazz), predicate, onlyProperties))
-            .orElse(null);
+            .orElse(newInstance(clazz));
   }
 
   public static <T> T copyPropertiesOnly(Object source, Class<T> clazz, String... onlyProperties) {
+    if (source == null) {
+      return newInstance(clazz);
+    }
     return copyPropertiesOnly(source, clazz, a -> false, onlyProperties);
   }
 
   public static <T, S> T copyPropertiesIgnore(S source, Class<T> clazz, Predicate<Binary<String, Object>> predicate, String... ignoreProperties) {
     return Optional.ofNullable(source)
             .map(s -> copyPropertiesIgnore(source, newInstance(clazz), predicate, ignoreProperties))
-            .orElse(null);
+            .orElse(newInstance(clazz));
   }
 
   public static <T, S> T copyPropertiesIgnore(S source, Class<T> clazz, String... ignoreProperties) {
+    if (source == null) {
+      return newInstance(clazz);
+    }
     return copyPropertiesIgnore(source, clazz, a -> false, ignoreProperties);
   }
 
   public static <T, S> T copyPropertiesIgnoreNull(S source, Class<T> clazz, String... ignoreProperties) {
+    if (source == null) {
+      return newInstance(clazz);
+    }
     return copyPropertiesIgnore(source, clazz, BeanUtils::ifNull, ignoreProperties);
   }
 
   public static <T, S> T copyPropertiesIgnoreBlank(S source, Class<T> clazz, String... ignoreProperties) {
+    if (source == null) {
+      return newInstance(clazz);
+    }
     return copyPropertiesIgnore(source, clazz, BeanUtils::ifBlank, ignoreProperties);
   }
 
@@ -97,7 +130,7 @@ public class BeanUtils {
               each.forEach(item -> list.add(copyProperties(item, clazz)));
               return list;
             })
-            .orElse(null);
+            .orElse(new ArrayList<>());
   }
 
   public static <T, S> List<T> copyPropertiesOnly(Iterable<S> sources, Class<T> clazz, Predicate<Binary<String, Object>> predicate, String... ignoreProperties) {
@@ -107,10 +140,13 @@ public class BeanUtils {
               each.forEach(item -> list.add(copyPropertiesOnly(item, clazz, predicate, ignoreProperties)));
               return list;
             })
-            .orElse(null);
+            .orElse(new ArrayList<>());
   }
 
   public static <T, S> List<T> copyPropertiesOnly(Iterable<S> sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return new ArrayList<>();
+    }
     return copyPropertiesOnly(sources, clazz, a -> false, ignoreProperties);
   }
 
@@ -121,18 +157,27 @@ public class BeanUtils {
               each.forEach(item -> list.add(copyPropertiesIgnore(item, clazz, predicate, ignoreProperties)));
               return list;
             })
-            .orElse(null);
+            .orElse(new ArrayList<>());
   }
 
   public static <T, S> List<T> copyPropertiesIgnore(Iterable<S> sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return new ArrayList<>();
+    }
     return copyPropertiesIgnore(sources, clazz, a -> false, ignoreProperties);
   }
 
   public static <T, S> List<T> copyPropertiesIgnoreNull(Iterable<S> sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return new ArrayList<>();
+    }
     return copyPropertiesIgnore(sources, clazz, BeanUtils::ifNull, ignoreProperties);
   }
 
   public static <T, S> List<T> copyPropertiesIgnoreBlank(Iterable<S> sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return new ArrayList<>();
+    }
     return copyPropertiesIgnore(sources, clazz, BeanUtils::ifBlank, ignoreProperties);
   }
 
@@ -146,7 +191,7 @@ public class BeanUtils {
               }
               return targetArray;
             })
-            .orElse(null);
+            .orElse((T[]) Array.newInstance(clazz, 0));
   }
 
   public static <T, S> T[] copyPropertiesOnly(S[] sources, Class<T> clazz, Predicate<Binary<String, Object>> predicate, String... ignoreProperties) {
@@ -159,10 +204,13 @@ public class BeanUtils {
               }
               return targetArray;
             })
-            .orElse(null);
+            .orElse((T[]) Array.newInstance(clazz, 0));
   }
 
   public static <T, S> T[] copyPropertiesOnly(S[] sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return (T[]) Array.newInstance(clazz, 0);
+    }
     return copyPropertiesOnly(sources, clazz, a -> false, ignoreProperties);
   }
 
@@ -177,18 +225,27 @@ public class BeanUtils {
               }
               return targetArray;
             })
-            .orElse(null);
+            .orElse((T[]) Array.newInstance(clazz, 0));
   }
 
   public static <T, S> T[] copyPropertiesIgnore(S[] sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return (T[]) Array.newInstance(clazz, 0);
+    }
     return copyPropertiesIgnore(sources, clazz, a -> false, ignoreProperties);
   }
 
   public static <T, S> T[] copyPropertiesIgnoreNull(S[] sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return (T[]) Array.newInstance(clazz, 0);
+    }
     return copyPropertiesIgnore(sources, clazz, BeanUtils::ifNull, ignoreProperties);
   }
 
   public static <T, S> T[] copyPropertiesIgnoreBlank(S[] sources, Class<T> clazz, String... ignoreProperties) {
+    if (sources == null) {
+      return (T[]) Array.newInstance(clazz, 0);
+    }
     return copyPropertiesIgnore(sources, clazz, BeanUtils::ifBlank, ignoreProperties);
   }
 
@@ -218,6 +275,9 @@ public class BeanUtils {
    * @param properties 手动指定的属性
    */
   public static Set<String> extractPropertyName(Object source, boolean ifNon, Predicate<Binary<String, Object>> predicate, String... properties) {
+    if (source == null) {
+      return new HashSet<>();
+    }
     final BeanWrapper src = new BeanWrapperImpl(source);
     PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
