@@ -47,6 +47,19 @@ public class Result<T> implements Serializable {
   /**
    * 用于简便构建 请求成功&业务成功 时的结果对象
    */
+
+  public static <T> Result<T> fail() {
+    Result<T> result = new Result<>();
+    result.setReqCode(FAILED);
+    return result;
+  }
+
+  public static <T> Result<T> success() {
+    Result<T> result = new Result<>();
+    result.setReqCode(OK);
+    return result;
+  }
+
   public static <T> Result<T> success(T result) {
     return new Result<>(result);
   }
