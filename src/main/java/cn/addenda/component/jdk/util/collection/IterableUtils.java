@@ -186,6 +186,10 @@ public class IterableUtils {
     if (iterable == null) {
       return null;
     }
+    // 此种优化不可取，返回值是旧集合还是新集合必须是确定的行为
+//    if (iterable instanceof ArrayList) {
+//      return ((ArrayList<T>) iterable);
+//    }
     return StreamSupport.stream(iterable.spliterator(), false)
             .collect(Collectors.toCollection(ArrayList::new));
   }
@@ -197,6 +201,9 @@ public class IterableUtils {
     if (iterable == null) {
       return null;
     }
+//    if (iterable instanceof HashSet) {
+//      return ((HashSet<T>) iterable);
+//    }
     return StreamSupport.stream(iterable.spliterator(), false)
             .collect(Collectors.toCollection(HashSet::new));
   }
@@ -209,6 +216,9 @@ public class IterableUtils {
     if (iterable == null) {
       return null;
     }
+//    if (iterable instanceof TreeSet) {
+//      return ((TreeSet<T>) iterable);
+//    }
     return (TreeSet<T>) StreamSupport.stream(iterable.spliterator(), false)
             .collect(Collectors.toCollection((Supplier<Set<T>>) () -> new TreeSet<>(comparator)));
   }
@@ -220,6 +230,9 @@ public class IterableUtils {
     if (iterable == null) {
       return null;
     }
+//    if (iterable instanceof TreeSet) {
+//      return ((TreeSet<T>) iterable);
+//    }
     return (TreeSet<T>) StreamSupport.stream(iterable.spliterator(), false)
             .collect(Collectors.toCollection((Supplier<Set<T>>) TreeSet::new));
   }
