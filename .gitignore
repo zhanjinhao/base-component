@@ -37,4 +37,7 @@ dependency-reduced-pom.xml
 *.log
 
 */db.properties
-
+src/test/resources/redis.properties
+src/test/resources/db.properties
+src/logs/*
+src/logs*
