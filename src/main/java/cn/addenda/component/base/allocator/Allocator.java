@@ -1,5 +1,7 @@
 package cn.addenda.component.base.allocator;
 
+import cn.addenda.component.base.Named;
+
 import java.util.UUID;
 
 /**

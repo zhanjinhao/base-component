@@ -1,4 +1,4 @@
-package cn.addenda.component.base.allocator;
+package cn.addenda.component.base;
 
 public interface Named {
 

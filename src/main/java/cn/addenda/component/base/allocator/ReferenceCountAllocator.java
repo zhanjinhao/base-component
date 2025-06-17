@@ -1,5 +1,6 @@
 package cn.addenda.component.base.allocator;
 
+import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.base.allocator.factory.DumbLockFactory;
 import cn.addenda.component.base.allocator.factory.LockFactory;
 import cn.addenda.component.base.allocator.factory.ReentrantLockFactory;

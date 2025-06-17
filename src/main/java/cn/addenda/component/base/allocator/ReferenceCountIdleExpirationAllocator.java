@@ -1,5 +1,6 @@
 package cn.addenda.component.base.allocator;
 
+import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.base.allocator.factory.DumbLockFactory;
 import cn.addenda.component.base.allocator.factory.LockFactory;
 import cn.addenda.component.base.allocator.factory.ReentrantLockFactory;
@@ -43,7 +44,7 @@ public abstract class ReferenceCountIdleExpirationAllocator<T>
 
   private final boolean alwaysUpdateTtl;
 
-  public ReferenceCountIdleExpirationAllocator(LockFactory<String> lockFactory, long ttl, boolean alwaysUpdateTtl) {
+  protected ReferenceCountIdleExpirationAllocator(LockFactory<String> lockFactory, long ttl, boolean alwaysUpdateTtl) {
     this.lockFactory = lockFactory;
     this.ttl = ttl;
     this.alwaysUpdateTtl = alwaysUpdateTtl;
