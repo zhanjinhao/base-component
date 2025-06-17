@@ -31,6 +31,6 @@ public class ConnectionException extends BaseException {
 
   @Override
   public String componentName() {
-    return "connect";
+    return "connection";
   }
 }
