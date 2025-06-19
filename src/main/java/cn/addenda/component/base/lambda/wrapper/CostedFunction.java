@@ -1,0 +1,82 @@
+package cn.addenda.component.base.lambda.wrapper;
+
+import cn.addenda.component.base.datetime.DateUtils;
+import cn.addenda.component.base.string.Slf4jUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.function.Function;
+
+public class CostedFunction<T, R> extends AbstractCostedFunction implements Function<T, R> {
+
+  private static final Logger logger = LoggerFactory.getLogger(CostedFunction.class);
+
+  /**
+   * 真正运行的任务
+   */
+  private final Function<T, R> function;
+
+  public CostedFunction(LocalDateTime createDateTime, Long threshold, Function<T, R> function) {
+    super(createDateTime, threshold);
+    this.function = function;
+  }
+
+  public CostedFunction(LocalDateTime createDateTime, Long threshold, Function<T, R> function, Integer queueSize, Integer poolSize, Integer activeCount) {
+    super(createDateTime, threshold, queueSize, poolSize, activeCount);
+    this.function = function;
+  }
+
+  public CostedFunction(LocalDateTime createDateTime, Long threshold, Function<T, R> function, ThreadPoolExecutor threadPoolExecutor) {
+    super(createDateTime, threshold, threadPoolExecutor);
+    this.function = function;
+  }
+
+  @Override
+  public R apply(T t) {
+    LocalDateTime startDateTime = LocalDateTime.now();
+    try {
+      return function.apply(t);
+    } finally {
+      LocalDateTime endDateTime = LocalDateTime.now();
+      log(startDateTime, endDateTime, function.getClass().getName(), function.toString());
+    }
+  }
+
+  @Override
+  public String toString() {
+    return Slf4jUtils.format("CostedFunction: createDateTime={}, threshold={}ms, function={}, queueSize={}, poolSize={}, activeCount={}",
+            DateUtils.format(createDateTime, DateUtils.yMdHmsS_FORMATTER), threshold, function, queueSize, poolSize, activeCount);
+  }
+
+  @Override
+  protected Logger getLogger() {
+    return logger;
+  }
+
+  public static <T, R> CostedFunction<T, R> of(LocalDateTime createDateTime, Long threshold, Function<T, R> function) {
+    return new CostedFunction<>(createDateTime, threshold, function);
+  }
+
+  public static <T, R> CostedFunction<T, R> of(LocalDateTime createDateTime, Long threshold, Function<T, R> function, Integer queueSize, Integer poolSize, Integer activeCount) {
+    return new CostedFunction<>(createDateTime, threshold, function, queueSize, poolSize, activeCount);
+  }
+
+  public static <T, R> CostedFunction<T, R> of(LocalDateTime createDateTime, Long threshold, Function<T, R> function, ThreadPoolExecutor threadPoolExecutor) {
+    return new CostedFunction<>(createDateTime, threshold, function, threadPoolExecutor);
+  }
+
+  public static <T, R> CostedFunction<T, R> of(Long threshold, Function<T, R> function) {
+    return new CostedFunction<>(LocalDateTime.now(), threshold, function);
+  }
+
+  public static <T, R> CostedFunction<T, R> of(Long threshold, Function<T, R> function, Integer queueSize, Integer poolSize, Integer activeCount) {
+    return new CostedFunction<>(LocalDateTime.now(), threshold, function, queueSize, poolSize, activeCount);
+  }
+
+  public static <T, R> CostedFunction<T, R> of(Long threshold, Function<T, R> function, ThreadPoolExecutor threadPoolExecutor) {
+    return new CostedFunction<>(LocalDateTime.now(), threshold, function, threadPoolExecutor);
+  }
+
+}

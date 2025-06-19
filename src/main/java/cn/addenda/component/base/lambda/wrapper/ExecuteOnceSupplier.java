@@ -1,4 +1,4 @@
-package cn.addenda.component.base.lambda;
+package cn.addenda.component.base.lambda.wrapper;
 
 import java.util.function.Supplier;
 
@@ -12,7 +12,9 @@ public class ExecuteOnceSupplier<R> implements Supplier<R> {
 
   @Override
   public R get() {
-    return r == null ? (r = supplier.get()) : r;
+    synchronized (this) {
+      return r == null ? (r = supplier.get()) : r;
+    }
   }
 
   public static <R> ExecuteOnceSupplier<R> of(Supplier<R> supplier) {

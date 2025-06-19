@@ -1,4 +1,4 @@
-package cn.addenda.component.base.lambda;
+package cn.addenda.component.base.lambda.wrapper;
 
 public class ExecuteOnceRunnable implements Runnable {
 
@@ -11,9 +11,11 @@ public class ExecuteOnceRunnable implements Runnable {
 
   @Override
   public void run() {
-    if (!b) {
-      b = true;
-      runnable.run();
+    synchronized (this) {
+      if (!b) {
+        b = true;
+        runnable.run();
+      }
     }
   }
 

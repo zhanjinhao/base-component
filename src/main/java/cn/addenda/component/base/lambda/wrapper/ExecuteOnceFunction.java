@@ -1,11 +1,13 @@
-package cn.addenda.component.base.lambda;
+package cn.addenda.component.base.lambda.wrapper;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public class ExecuteOnceFunction<T, R> implements Function<T, R> {
 
   private final Function<T, R> function;
-  private R r;
+  private final Map<T, R> resultMap = new HashMap<>();
 
   public ExecuteOnceFunction(Function<T, R> function) {
     this.function = function;
@@ -13,7 +15,9 @@ public class ExecuteOnceFunction<T, R> implements Function<T, R> {
 
   @Override
   public R apply(T t) {
-    return r == null ? (r = function.apply(t)) : r;
+    synchronized (this) {
+      return resultMap.computeIfAbsent(t, function);
+    }
   }
 
   public static <T, R> ExecuteOnceFunction<T, R> of(Function<T, R> function) {

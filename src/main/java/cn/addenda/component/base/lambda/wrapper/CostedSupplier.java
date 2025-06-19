@@ -1,0 +1,82 @@
+package cn.addenda.component.base.lambda.wrapper;
+
+import cn.addenda.component.base.datetime.DateUtils;
+import cn.addenda.component.base.string.Slf4jUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.function.Supplier;
+
+public class CostedSupplier<R> extends AbstractCostedFunction implements Supplier<R> {
+
+  private static final Logger logger = LoggerFactory.getLogger(CostedSupplier.class);
+
+  /**
+   * 真正运行的任务
+   */
+  private final Supplier<R> supplier;
+
+  private CostedSupplier(LocalDateTime createDateTime, Long threshold, Supplier<R> supplier) {
+    super(createDateTime, threshold);
+    this.supplier = supplier;
+  }
+
+  private CostedSupplier(LocalDateTime createDateTime, Long threshold, Supplier<R> supplier, Integer queueSize, Integer poolSize, Integer activeCount) {
+    super(createDateTime, threshold, queueSize, poolSize, activeCount);
+    this.supplier = supplier;
+  }
+
+  private CostedSupplier(LocalDateTime createDateTime, Long threshold, Supplier<R> supplier, ThreadPoolExecutor threadPoolExecutor) {
+    super(createDateTime, threshold, threadPoolExecutor);
+    this.supplier = supplier;
+  }
+
+  @Override
+  public R get() {
+    LocalDateTime startDateTime = LocalDateTime.now();
+    try {
+      return supplier.get();
+    } finally {
+      LocalDateTime endDateTime = LocalDateTime.now();
+      log(startDateTime, endDateTime, supplier.getClass().getName(), supplier.toString());
+    }
+  }
+
+  @Override
+  public String toString() {
+    return Slf4jUtils.format("CostedSupplier: createDateTime={}, threshold={}ms, supplier={}, queueSize={}, poolSize={}, activeCount={}",
+            DateUtils.format(createDateTime, DateUtils.yMdHmsS_FORMATTER), threshold, supplier, queueSize, poolSize, activeCount);
+  }
+
+  @Override
+  protected Logger getLogger() {
+    return logger;
+  }
+
+  public static <R> CostedSupplier<R> of(LocalDateTime createDateTime, Long threshold, Supplier<R> supplier) {
+    return new CostedSupplier<>(createDateTime, threshold, supplier);
+  }
+
+  public static <R> CostedSupplier<R> of(LocalDateTime createDateTime, Long threshold, Supplier<R> supplier, Integer queueSize, Integer poolSize, Integer activeCount) {
+    return new CostedSupplier<>(createDateTime, threshold, supplier, queueSize, poolSize, activeCount);
+  }
+
+  public static <R> CostedSupplier<R> of(LocalDateTime createDateTime, Long threshold, Supplier<R> supplier, ThreadPoolExecutor threadPoolExecutor) {
+    return new CostedSupplier<>(createDateTime, threshold, supplier, threadPoolExecutor);
+  }
+
+  public static <R> CostedSupplier<R> of(Long threshold, Supplier<R> supplier) {
+    return new CostedSupplier<>(LocalDateTime.now(), threshold, supplier);
+  }
+
+  public static <R> CostedSupplier<R> of(Long threshold, Supplier<R> supplier, Integer queueSize, Integer poolSize, Integer activeCount) {
+    return new CostedSupplier<>(LocalDateTime.now(), threshold, supplier, queueSize, poolSize, activeCount);
+  }
+
+  public static <R> CostedSupplier<R> of(Long threshold, Supplier<R> supplier, ThreadPoolExecutor threadPoolExecutor) {
+    return new CostedSupplier<>(LocalDateTime.now(), threshold, supplier, threadPoolExecutor);
+  }
+
+}
