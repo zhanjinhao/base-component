@@ -11,14 +11,12 @@ public class NamedFunction<T, R> extends AbstractNamed implements Function<T, R>
   private final Function<T, R> function;
 
   private NamedFunction(String name, Function<T, R> function) {
-    super();
-    super.setName(name);
+    super(name);
     this.function = function;
   }
 
   private NamedFunction(String name, BiFunction<String, T, R> biFunction) {
-    super();
-    super.setName(name);
+    super(name);
     this.function = new Function<T, R>() {
       @Override
       public R apply(T t) {

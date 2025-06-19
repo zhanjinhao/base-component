@@ -1,25 +1,22 @@
 package cn.addenda.component.base.lambda.wrapper;
 
+import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.base.string.Slf4jUtils;
-import lombok.Getter;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class NamedSupplier<R> implements Supplier<R> {
-
-  @Getter
-  private final String name;
+public class NamedSupplier<R> extends AbstractNamed implements Supplier<R> {
 
   private final Supplier<R> supplier;
 
   private NamedSupplier(String name, Supplier<R> supplier) {
-    this.name = name;
+    super(name);
     this.supplier = supplier;
   }
 
   private NamedSupplier(String name, Function<String, R> function) {
-    this.name = name;
+    super(name);
     this.supplier = new Supplier<R>() {
       @Override
       public R get() {

@@ -1,24 +1,21 @@
 package cn.addenda.component.base.lambda.wrapper;
 
+import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.base.string.Slf4jUtils;
-import lombok.Getter;
 
 import java.util.function.Consumer;
 
-public class NamedRunnable implements Runnable {
-
-  @Getter
-  private final String name;
+public class NamedRunnable extends AbstractNamed implements Runnable {
 
   private final Runnable runnable;
 
   private NamedRunnable(String name, Runnable runnable) {
-    this.name = name;
+    super(name);
     this.runnable = runnable;
   }
 
   private NamedRunnable(String name, Consumer<String> consumer) {
-    this.name = name;
+    super(name);
     this.runnable = new Runnable() {
       @Override
       public void run() {
