@@ -1,6 +1,6 @@
-package cn.addenda.component.base.test.concurrent;
+package cn.addenda.component.base.test.util;
 
-import cn.addenda.component.base.concurrent.SleepUtils;
+import cn.addenda.component.base.util.SleepUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package cn.addenda.component.base.concurrent;
+package cn.addenda.component.base.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
