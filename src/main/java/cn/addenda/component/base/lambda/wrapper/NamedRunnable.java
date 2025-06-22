@@ -2,6 +2,7 @@ package cn.addenda.component.base.lambda.wrapper;
 
 import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.base.string.Slf4jUtils;
+import cn.addenda.component.stacktrace.StackTraceUtils;
 
 import java.util.function.Consumer;
 
@@ -35,6 +36,14 @@ public class NamedRunnable extends AbstractNamed implements Runnable {
 
   public static NamedRunnable of(String name, Consumer<String> consumer) {
     return new NamedRunnable(name, consumer);
+  }
+
+  public static NamedRunnable of(Runnable runnable) {
+    return new NamedRunnable(StackTraceUtils.getCallerInfo(), runnable);
+  }
+
+  public static NamedRunnable of(Consumer<String> consumer) {
+    return new NamedRunnable(StackTraceUtils.getCallerInfo(), consumer);
   }
 
   @Override
