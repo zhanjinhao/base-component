@@ -13,6 +13,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
@@ -74,7 +75,7 @@ public class IterableUtils {
   /**
    * 集合做拆分
    */
-  public static <T> List<List<T>> splitToList(Iterable<T> iterable, int quantity) {
+  public static <T> List<List<T>> splitToListList(Iterable<T> iterable, int quantity) {
     if (iterable == null) {
       return null;
     }
@@ -100,11 +101,63 @@ public class IterableUtils {
   /**
    * 集合做拆分
    */
+  public static <T> List<Set<T>> splitToSetList(Iterable<T> iterable, int quantity) {
+    if (iterable == null) {
+      return null;
+    }
+    List<Set<T>> setList = new ArrayList<>();
+    Set<T> seg = null;
+    int i = 0;
+    for (T t : iterable) {
+      if (i % quantity == 0) {
+        if (seg != null) {
+          setList.add(seg);
+        }
+        seg = new HashSet<>();
+      }
+      seg.add(t);
+      i++;
+    }
+    if (seg != null && !seg.isEmpty()) {
+      setList.add(seg);
+    }
+    return setList;
+  }
+
+  /**
+   * 集合做拆分
+   */
+  public static <T> List<Iterable<T>> splitToIterableList(Iterable<T> iterable, int quantity) {
+    if (iterable == null) {
+      return null;
+    }
+    List<Iterable<T>> collectionList = new ArrayList<>();
+    List<T> seg = null;
+    int i = 0;
+    for (T t : iterable) {
+      if (i % quantity == 0) {
+        if (seg != null) {
+          collectionList.add(seg);
+        }
+        seg = new ArrayList<>();
+      }
+      seg.add(t);
+      i++;
+    }
+    if (seg != null && !seg.isEmpty()) {
+      collectionList.add(seg);
+    }
+    return collectionList;
+  }
+
+  /**
+   * 集合做拆分
+   */
   public static <T> Iterable<Iterable<T>> split(Iterable<T> iterable, int quantity) {
     if (iterable == null) {
       return null;
     }
-    List<List<T>> lists = splitToList(iterable, quantity);
+    List<List<T>> lists = splitToListList(iterable, quantity);
     return new ArrayList<>(lists);
   }
 
@@ -174,6 +227,15 @@ public class IterableUtils {
   }
 
   public static <T, P> Iterable<P> collect(Iterable<T> iterable, Function<T, P> function) {
+    Assert.notNull(function, "`function` can not be null!");
+    if (iterable == null) {
+      return null;
+    }
+    return StreamSupport.stream(iterable.spliterator(), false)
+            .map(function).collect(Collectors.toList());
+  }
+
+  public static <T, P> List<P> collectToList(Iterable<T> iterable, Function<T, P> function) {
     Assert.notNull(function, "`function` can not be null!");
     if (iterable == null) {
       return null;
@@ -307,6 +369,10 @@ public class IterableUtils {
       throw new IllegalStateException(String.format("When invoking [%s], multi result of param[%s,%s] are returned.", callerInfo, p1, p2));
     }
     return apply.get(0);
+  }
+
+  public static <T> Stream<T> ofStream(Iterable<T> iterable) {
+    return StreamSupport.stream(iterable.spliterator(), false);
   }
 
 }

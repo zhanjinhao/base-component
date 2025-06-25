@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * @author addenda
@@ -45,6 +46,10 @@ public class ArrayUtils {
     return set;
   }
 
+  public static <T> Stream<T> ofStream(T[] array) {
+    return Arrays.stream(array);
+  }
+
   public static boolean isEmpty(final Object[] array) {
     return array == null || array.length == 0;
   }
@@ -79,7 +84,7 @@ public class ArrayUtils {
       try {
         return Arrays.deepToString((Object[]) obj);
       } catch (Exception ignore) {
-        //ignore
+        // ignore
       }
     }
 

@@ -1,5 +1,8 @@
 package cn.addenda.component.base.test;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -10,9 +13,12 @@ public class UnLockAfterLockFailedTest {
 
   private static ReentrantLock lock = new ReentrantLock();
 
-  public static void main(String[] args) {
+  @Test
+  public void test() {
 
-    lock.unlock();
+    Assert.assertThrows(IllegalMonitorStateException.class, () -> {
+      lock.unlock();
+    });
 
   }
 
