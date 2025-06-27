@@ -13,7 +13,10 @@ public class ExecuteOnceSupplier<R> implements Supplier<R> {
   @Override
   public R get() {
     synchronized (this) {
-      return r == null ? (r = supplier.get()) : r;
+      if (r == null) {
+        r = supplier.get();
+      }
+      return r;
     }
   }
 
