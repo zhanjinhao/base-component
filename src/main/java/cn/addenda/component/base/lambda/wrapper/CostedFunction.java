@@ -79,4 +79,16 @@ public class CostedFunction<T, R> extends AbstractCostedFunction implements Func
     return new CostedFunction<>(LocalDateTime.now(), threshold, function, threadPoolExecutor);
   }
 
+  public static <T, R> CostedFunction<T, R> of(Function<T, R> function) {
+    return new CostedFunction<>(LocalDateTime.now(), DEFAULT_THRESHOLD, function);
+  }
+
+  public static <T, R> CostedFunction<T, R> of(Function<T, R> function, Integer queueSize, Integer poolSize, Integer activeCount) {
+    return new CostedFunction<>(LocalDateTime.now(), DEFAULT_THRESHOLD, function, queueSize, poolSize, activeCount);
+  }
+
+  public static <T, R> CostedFunction<T, R> of(Function<T, R> function, ThreadPoolExecutor threadPoolExecutor) {
+    return new CostedFunction<>(LocalDateTime.now(), DEFAULT_THRESHOLD, function, threadPoolExecutor);
+  }
+
 }

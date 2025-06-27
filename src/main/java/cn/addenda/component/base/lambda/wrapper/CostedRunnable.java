@@ -78,4 +78,16 @@ public class CostedRunnable extends AbstractCostedFunction implements Runnable {
     return new CostedRunnable(LocalDateTime.now(), threshold, runnable, threadPoolExecutor);
   }
 
+  public static CostedRunnable of(Runnable runnable) {
+    return new CostedRunnable(LocalDateTime.now(), DEFAULT_THRESHOLD, runnable);
+  }
+
+  public static CostedRunnable of(Runnable runnable, Integer queueSize, Integer poolSize, Integer activeCount) {
+    return new CostedRunnable(LocalDateTime.now(), DEFAULT_THRESHOLD, runnable, queueSize, poolSize, activeCount);
+  }
+
+  public static CostedRunnable of(Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
+    return new CostedRunnable(LocalDateTime.now(), DEFAULT_THRESHOLD, runnable, threadPoolExecutor);
+  }
+
 }

@@ -79,4 +79,16 @@ public class CostedSupplier<R> extends AbstractCostedFunction implements Supplie
     return new CostedSupplier<>(LocalDateTime.now(), threshold, supplier, threadPoolExecutor);
   }
 
+  public static <R> CostedSupplier<R> of(Supplier<R> supplier) {
+    return new CostedSupplier<>(LocalDateTime.now(), DEFAULT_THRESHOLD, supplier);
+  }
+
+  public static <R> CostedSupplier<R> of(Supplier<R> supplier, Integer queueSize, Integer poolSize, Integer activeCount) {
+    return new CostedSupplier<>(LocalDateTime.now(), DEFAULT_THRESHOLD, supplier, queueSize, poolSize, activeCount);
+  }
+
+  public static <R> CostedSupplier<R> of(Supplier<R> supplier, ThreadPoolExecutor threadPoolExecutor) {
+    return new CostedSupplier<>(LocalDateTime.now(), DEFAULT_THRESHOLD, supplier, threadPoolExecutor);
+  }
+
 }

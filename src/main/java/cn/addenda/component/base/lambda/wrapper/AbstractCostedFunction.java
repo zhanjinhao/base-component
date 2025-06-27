@@ -11,6 +11,11 @@ import java.util.function.Supplier;
 public abstract class AbstractCostedFunction {
 
   /**
+   * todo 从系统变量里面拿
+   */
+  public static Long DEFAULT_THRESHOLD = 200L;
+
+  /**
    * 任务创建时间
    */
   protected final LocalDateTime createDateTime;
