@@ -1,7 +1,5 @@
 package cn.addenda.component.base.lambda.wrapper;
 
-import cn.addenda.component.base.datetime.DateUtils;
-import cn.addenda.component.base.string.Slf4jUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +44,14 @@ public class CostedSupplier<R> extends AbstractCostedFunction implements Supplie
 
   @Override
   public String toString() {
-    return Slf4jUtils.format("CostedSupplier: createDateTime={}, threshold={}ms, supplier={}, queueSize={}, poolSize={}, activeCount={}",
-            DateUtils.format(createDateTime, DateUtils.yMdHmsS_FORMATTER), threshold, supplier, queueSize, poolSize, activeCount);
+    return "CostedSupplier{" +
+            "supplier=" + supplier +
+            ", createDateTime=" + createDateTime +
+            ", threshold=" + threshold +
+            ", queueSize=" + queueSize +
+            ", poolSize=" + poolSize +
+            ", activeCount=" + activeCount +
+            '}';
   }
 
   @Override

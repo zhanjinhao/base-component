@@ -24,4 +24,11 @@ public class ExecuteOnceSupplier<R> implements Supplier<R> {
     return new ExecuteOnceSupplier<>(supplier);
   }
 
+  @Override
+  public String toString() {
+    return "ExecuteOnceSupplier{" +
+            "supplier=" + supplier +
+            '}';
+  }
+
 }

@@ -24,4 +24,11 @@ public class ExecuteOnceFunction<T, R> implements Function<T, R> {
     return new ExecuteOnceFunction<>(function);
   }
 
+  @Override
+  public String toString() {
+    return "ExecuteOnceFunction{" +
+            "function=" + function +
+            '}';
+  }
+
 }

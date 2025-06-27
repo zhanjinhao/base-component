@@ -61,6 +61,8 @@ public class SystemException extends RuntimeException {
 
   @Override
   public String toString() {
-    return "name: " + name() + ". " + super.toString();
+    return "SystemException{" +
+            "name='" + name + '\'' +
+            "} " + super.toString();
   }
 }

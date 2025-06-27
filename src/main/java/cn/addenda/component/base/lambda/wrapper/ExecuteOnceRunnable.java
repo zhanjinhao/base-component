@@ -23,4 +23,10 @@ public class ExecuteOnceRunnable implements Runnable {
     return new ExecuteOnceRunnable(runnable);
   }
 
+  @Override
+  public String toString() {
+    return "ExecuteOnceRunnable{" +
+            "runnable=" + runnable +
+            '}';
+  }
 }

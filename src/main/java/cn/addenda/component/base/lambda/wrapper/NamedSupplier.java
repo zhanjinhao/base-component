@@ -1,7 +1,6 @@
 package cn.addenda.component.base.lambda.wrapper;
 
 import cn.addenda.component.base.AbstractNamed;
-import cn.addenda.component.base.string.Slf4jUtils;
 import cn.addenda.component.stacktrace.StackTraceUtils;
 
 import java.util.function.Function;
@@ -54,7 +53,10 @@ public class NamedSupplier<R> extends AbstractNamed implements Supplier<R> {
 
   @Override
   public String toString() {
-    return Slf4jUtils.format("NamedSupplier: supplier={}, name={}. ", supplier, getName());
+    return "NamedSupplier{" +
+            "supplier=" + supplier +
+            "name=" + getName() +
+            '}';
   }
 
 }

@@ -4,6 +4,8 @@ import cn.addenda.component.base.jackson.deserialzer.LocalDateTimeTsDeSerializer
 import cn.addenda.component.base.jackson.serialzer.LocalDateTimeTsSerializer;
 import cn.addenda.component.base.jackson.util.JacksonUtils;
 import cn.addenda.component.base.jackson.util.TypeFactoryUtils;
+import cn.addenda.component.base.lambda.wrapper.CostedRunnable;
+import cn.addenda.component.base.lambda.wrapper.NamedRunnable;
 import cn.addenda.component.base.pojo.Binary;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
@@ -101,6 +103,20 @@ public class JacksonUtilsTest {
     testCustomized();
     System.out.println("\n------------------\n");
     testJsonPropertyOrder();
+  }
+
+
+  @Test
+  public void test6() {
+    NamedRunnable namedRunnable = NamedRunnable.of(new Runnable() {
+      @Override
+      public void run() {
+
+      }
+    });
+    CostedRunnable costedRunnable = CostedRunnable.of(namedRunnable);
+    String str = JacksonUtils.toStr(costedRunnable);
+    Assert.assertEquals("", str);
   }
 
   private static void testJsonPropertyOrder() {

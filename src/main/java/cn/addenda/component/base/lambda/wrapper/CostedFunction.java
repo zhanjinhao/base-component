@@ -1,7 +1,5 @@
 package cn.addenda.component.base.lambda.wrapper;
 
-import cn.addenda.component.base.datetime.DateUtils;
-import cn.addenda.component.base.string.Slf4jUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +44,14 @@ public class CostedFunction<T, R> extends AbstractCostedFunction implements Func
 
   @Override
   public String toString() {
-    return Slf4jUtils.format("CostedFunction: createDateTime={}, threshold={}ms, function={}, queueSize={}, poolSize={}, activeCount={}",
-            DateUtils.format(createDateTime, DateUtils.yMdHmsS_FORMATTER), threshold, function, queueSize, poolSize, activeCount);
+    return "CostedFunction{" +
+            "function=" + function +
+            ", createDateTime=" + createDateTime +
+            ", threshold=" + threshold +
+            ", queueSize=" + queueSize +
+            ", poolSize=" + poolSize +
+            ", activeCount=" + activeCount +
+            '}';
   }
 
   @Override

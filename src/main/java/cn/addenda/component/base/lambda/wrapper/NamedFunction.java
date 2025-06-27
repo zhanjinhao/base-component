@@ -1,7 +1,6 @@
 package cn.addenda.component.base.lambda.wrapper;
 
 import cn.addenda.component.base.AbstractNamed;
-import cn.addenda.component.base.string.Slf4jUtils;
 import cn.addenda.component.stacktrace.StackTraceUtils;
 
 import java.util.function.BiFunction;
@@ -54,7 +53,9 @@ public class NamedFunction<T, R> extends AbstractNamed implements Function<T, R>
 
   @Override
   public String toString() {
-    return Slf4jUtils.format("NamedFunction: function={}, name={}. ", function, getName());
+    return "NamedFunction{" +
+            "function=" + function +
+            "name=" + getName() +
+            '}';
   }
-
 }

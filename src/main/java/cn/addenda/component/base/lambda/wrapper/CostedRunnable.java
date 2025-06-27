@@ -1,7 +1,5 @@
 package cn.addenda.component.base.lambda.wrapper;
 
-import cn.addenda.component.base.datetime.DateUtils;
-import cn.addenda.component.base.string.Slf4jUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,8 +43,14 @@ public class CostedRunnable extends AbstractCostedFunction implements Runnable {
 
   @Override
   public String toString() {
-    return Slf4jUtils.format("CostedRunnable: createDateTime={}, threshold={}ms, runnable={}, queueSize={}, poolSize={}, activeCount={}",
-            DateUtils.format(createDateTime, DateUtils.yMdHmsS_FORMATTER), threshold, runnable, queueSize, poolSize, activeCount);
+    return "CostedRunnable{" +
+            "runnable=" + runnable +
+            ", createDateTime=" + createDateTime +
+            ", threshold=" + threshold +
+            ", queueSize=" + queueSize +
+            ", poolSize=" + poolSize +
+            ", activeCount=" + activeCount +
+            '}';
   }
 
   @Override
