@@ -116,7 +116,7 @@ public class JacksonUtilsTest {
     });
     CostedRunnable costedRunnable = CostedRunnable.of(namedRunnable);
     String str = JacksonUtils.toStr(costedRunnable);
-    Assert.assertEquals("", str);
+    Assert.assertEquals("{}", str);
   }
 
   private static void testJsonPropertyOrder() {
