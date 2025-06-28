@@ -116,7 +116,7 @@ public class TypeFactoryUtilsTest {
     user2.setBirth(LocalDateTime.now());
     user2.setDeath(LocalDateTime.now());
     user2.setT(123);
-    Binary<User<String>, User<Integer>> binary = new Binary<>(user1, user2);
+    Binary<User<String>, User<Integer>> binary = Binary.of(user1, user2);
 
     String mapJson = JacksonUtils.toStr(binary);
     log.info("{}", mapJson);

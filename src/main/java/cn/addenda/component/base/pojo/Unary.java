@@ -38,6 +38,10 @@ public class Unary<T1> {
     return Objects.hash(f1);
   }
 
+  public static <T1> Unary<T1> of(T1 t1) {
+    return new Unary<>(t1);
+  }
+
   static class UnarySerializer<T1> extends JsonSerializer<Unary<T1>> {
 
     @Override

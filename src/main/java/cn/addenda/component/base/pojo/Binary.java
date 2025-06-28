@@ -19,7 +19,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @ToString
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @JsonSerialize(using = Binary.BinarySerializer.class)
 public class Binary<T1, T2> implements Map.Entry<T1, T2> {
@@ -43,6 +43,10 @@ public class Binary<T1, T2> implements Map.Entry<T1, T2> {
     T2 t2 = this.f2;
     this.f2 = value;
     return t2;
+  }
+
+  public static <T1, T2> Binary<T1, T2> of(T1 t1, T2 t2) {
+    return new Binary<>(t1, t2);
   }
 
   @Override

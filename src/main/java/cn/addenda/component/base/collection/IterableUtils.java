@@ -32,10 +32,10 @@ public class IterableUtils {
       return new Ternary<>();
     }
     if (a == null) {
-      return new Ternary<>(new ArrayList<>(), new ArrayList<>(), toArrayList(b));
+      return Ternary.of(new ArrayList<>(), new ArrayList<>(), toArrayList(b));
     }
     if (b == null) {
-      return new Ternary<>(toArrayList(a), new ArrayList<>(), new ArrayList<>());
+      return Ternary.of(toArrayList(a), new ArrayList<>(), new ArrayList<>());
     }
     a = toArrayList(a);
     b = toArrayList(b);
@@ -61,7 +61,7 @@ public class IterableUtils {
 
     List<T> notInAButInB = toArrayList(b);
 
-    return new Ternary<>(inAButNotInB, inAAndB, notInAButInB);
+    return Ternary.of(inAButNotInB, inAAndB, notInAButInB);
   }
 
   /**
@@ -69,7 +69,7 @@ public class IterableUtils {
    */
   public static <T> Ternary<Iterable<T>, Iterable<T>, Iterable<T>> separate(Iterable<T> a, Iterable<T> b) {
     Ternary<List<T>, List<T>, List<T>> ternary = separateToList(a, b);
-    return new Ternary<>(ternary.getF1(), ternary.getF2(), ternary.getF3());
+    return Ternary.of(ternary.getF1(), ternary.getF2(), ternary.getF3());
   }
 
   /**

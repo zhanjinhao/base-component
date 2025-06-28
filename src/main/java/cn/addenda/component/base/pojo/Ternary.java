@@ -18,7 +18,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @ToString
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @JsonSerialize(using = Ternary.TernarySerializer.class)
 public class Ternary<T1, T2, T3> {
@@ -38,6 +38,10 @@ public class Ternary<T1, T2, T3> {
   @Override
   public int hashCode() {
     return Objects.hash(f1, f2, f3);
+  }
+
+  public static <T1, T2, T3> Ternary<T1, T2, T3> of(T1 t1, T2 t2, T3 t3) {
+    return new Ternary<>(t1, t2, t3);
   }
 
   static class TernarySerializer<T1, T2, T3> extends JsonSerializer<Ternary<T1, T2, T3>> {
