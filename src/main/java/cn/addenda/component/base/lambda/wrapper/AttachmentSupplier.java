@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 public class AttachmentSupplier<A, R> implements Supplier<R> {
 
+  @Getter
   private final Supplier<R> supplier;
 
   @Getter

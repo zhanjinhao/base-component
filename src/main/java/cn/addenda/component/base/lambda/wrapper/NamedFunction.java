@@ -2,12 +2,14 @@ package cn.addenda.component.base.lambda.wrapper;
 
 import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.stacktrace.StackTraceUtils;
+import lombok.Getter;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class NamedFunction<T, R> extends AbstractNamed implements Function<T, R> {
 
+  @Getter
   private final Function<T, R> function;
 
   private NamedFunction(String name, Function<T, R> function) {

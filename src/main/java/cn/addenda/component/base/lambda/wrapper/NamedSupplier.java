@@ -2,12 +2,14 @@ package cn.addenda.component.base.lambda.wrapper;
 
 import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.stacktrace.StackTraceUtils;
+import lombok.Getter;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class NamedSupplier<R> extends AbstractNamed implements Supplier<R> {
 
+  @Getter
   private final Supplier<R> supplier;
 
   private NamedSupplier(String name, Supplier<R> supplier) {

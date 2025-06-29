@@ -1,5 +1,6 @@
 package cn.addenda.component.base.lambda.wrapper;
 
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,7 @@ public class CostedSupplier<R> extends AbstractCostedFunction implements Supplie
   /**
    * 真正运行的任务
    */
+  @Getter
   private final Supplier<R> supplier;
 
   private CostedSupplier(LocalDateTime createDateTime, Long threshold, Supplier<R> supplier) {

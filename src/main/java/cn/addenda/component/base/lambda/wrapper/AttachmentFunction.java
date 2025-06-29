@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 public class AttachmentFunction<A, T, R> implements Function<T, R> {
 
+  @Getter
   private final Function<T, R> function;
 
   @Getter

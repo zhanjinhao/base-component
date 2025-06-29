@@ -1,5 +1,6 @@
 package cn.addenda.component.base.lambda.wrapper;
 
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,7 @@ public class CostedFunction<T, R> extends AbstractCostedFunction implements Func
   /**
    * 真正运行的任务
    */
+  @Getter
   private final Function<T, R> function;
 
   public CostedFunction(LocalDateTime createDateTime, Long threshold, Function<T, R> function) {

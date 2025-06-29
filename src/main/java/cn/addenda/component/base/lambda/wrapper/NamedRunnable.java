@@ -2,11 +2,13 @@ package cn.addenda.component.base.lambda.wrapper;
 
 import cn.addenda.component.base.AbstractNamed;
 import cn.addenda.component.stacktrace.StackTraceUtils;
+import lombok.Getter;
 
 import java.util.function.Consumer;
 
 public class NamedRunnable extends AbstractNamed implements Runnable {
 
+  @Getter
   private final Runnable runnable;
 
   private NamedRunnable(String name, Runnable runnable) {

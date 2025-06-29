@@ -4,6 +4,7 @@ import lombok.Getter;
 
 public class AttachmentRunnable<A> implements Runnable {
 
+  @Getter
   private final Runnable runnable;
 
   @Getter

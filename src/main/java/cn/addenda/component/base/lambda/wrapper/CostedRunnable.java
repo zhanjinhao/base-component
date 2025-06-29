@@ -1,5 +1,6 @@
 package cn.addenda.component.base.lambda.wrapper;
 
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,7 @@ public class CostedRunnable extends AbstractCostedFunction implements Runnable {
   /**
    * 真正运行的任务
    */
+  @Getter
   private final Runnable runnable;
 
   private CostedRunnable(LocalDateTime createDateTime, Long threshold, Runnable runnable) {
