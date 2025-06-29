@@ -35,10 +35,12 @@ public class CostedFunction<T, R> extends AbstractCostedFunction implements Func
   public R apply(T t) {
     LocalDateTime startDateTime = LocalDateTime.now();
     try {
-      return function.apply(t);
-    } finally {
-      LocalDateTime endDateTime = LocalDateTime.now();
-      log(startDateTime, endDateTime, function.getClass().getName(), function.toString());
+      R apply = function.apply(t);
+      log(startDateTime, LocalDateTime.now(), function.getClass().getName(), function.toString(), null);
+      return apply;
+    } catch (Throwable throwable) {
+      log(startDateTime, LocalDateTime.now(), function.getClass().getName(), function.toString(), throwable);
+      throw throwable;
     }
   }
 

@@ -56,7 +56,7 @@ public abstract class AbstractCostedFunction {
     this.activeCount = threadPoolExecutor.getActiveCount();
   }
 
-  protected void log(LocalDateTime startDateTime, LocalDateTime endDateTime, String functionType, String functionName) {
+  protected void log(LocalDateTime startDateTime, LocalDateTime endDateTime, String functionType, String functionName, Throwable throwable) {
     long totalCost = DateUtils.localDateTimeToTimestamp(endDateTime) - DateUtils.localDateTimeToTimestamp(createDateTime);
     long runCost = DateUtils.localDateTimeToTimestamp(endDateTime) - DateUtils.localDateTimeToTimestamp(startDateTime);
     Supplier<String> msgSupplier;
@@ -75,14 +75,18 @@ public abstract class AbstractCostedFunction {
               totalCost, runCost, queueSize, poolSize, activeCount);
     }
 
-    boolean flag = false;
-    // totalCost > cunCost两倍 或 totalCost - runCost > [threshold]ms时，打印error
-    if (totalCost > 2 * runCost || totalCost - runCost > threshold) {
-      getLogger().error(msgSupplier.get());
-      flag = true;
-    }
-    if (!flag && getLogger().isDebugEnabled()) {
-      getLogger().debug(msgSupplier.get());
+    if (throwable != null) {
+      getLogger().error(msgSupplier.get(), throwable);
+    } else {
+      boolean flag = false;
+      // totalCost > cunCost两倍 或 totalCost - runCost > [threshold]ms时，打印error
+      if (totalCost > 2 * runCost || totalCost - runCost > threshold) {
+        getLogger().error(msgSupplier.get());
+        flag = true;
+      }
+      if (!flag && getLogger().isDebugEnabled()) {
+        getLogger().debug(msgSupplier.get());
+      }
     }
   }
 

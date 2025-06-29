@@ -35,10 +35,12 @@ public class CostedSupplier<R> extends AbstractCostedFunction implements Supplie
   public R get() {
     LocalDateTime startDateTime = LocalDateTime.now();
     try {
-      return supplier.get();
-    } finally {
-      LocalDateTime endDateTime = LocalDateTime.now();
-      log(startDateTime, endDateTime, supplier.getClass().getName(), supplier.toString());
+      R r = supplier.get();
+      log(startDateTime, LocalDateTime.now(), supplier.getClass().getName(), supplier.toString(), null);
+      return r;
+    } catch (Throwable throwable) {
+      log(startDateTime, LocalDateTime.now(), supplier.getClass().getName(), supplier.toString(), throwable);
+      throw throwable;
     }
   }
 

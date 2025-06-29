@@ -35,9 +35,10 @@ public class CostedRunnable extends AbstractCostedFunction implements Runnable {
     LocalDateTime startDateTime = LocalDateTime.now();
     try {
       runnable.run();
-    } finally {
-      LocalDateTime endDateTime = LocalDateTime.now();
-      log(startDateTime, endDateTime, runnable.getClass().getName(), runnable.toString());
+      log(startDateTime, LocalDateTime.now(), runnable.getClass().getName(), runnable.toString(), null);
+    } catch (Throwable throwable) {
+      log(startDateTime, LocalDateTime.now(), runnable.getClass().getName(), runnable.toString(), throwable);
+      throw throwable;
     }
   }
 
