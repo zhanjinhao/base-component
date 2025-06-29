@@ -2,6 +2,7 @@ package cn.addenda.component.base.lambda.wrapper;
 
 import cn.addenda.component.base.datetime.DateUtils;
 import cn.addenda.component.base.string.Slf4jUtils;
+import lombok.Getter;
 import org.slf4j.Logger;
 
 import java.time.LocalDateTime;
@@ -18,21 +19,26 @@ public abstract class AbstractCostedFunction {
   /**
    * 任务创建时间
    */
+  @Getter
   protected final LocalDateTime createDateTime;
 
   /**
    * 超时的阈值
    */
+  @Getter
   protected final Long threshold;
 
   // ------------------------------------
   //  下面的属性是在线程池里面运行任务的时候会有
   // ------------------------------------
 
+  @Getter
   protected Integer queueSize;
 
+  @Getter
   protected Integer poolSize;
 
+  @Getter
   protected Integer activeCount;
 
   protected AbstractCostedFunction(LocalDateTime createDateTime, Long threshold) {

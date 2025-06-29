@@ -1,9 +1,11 @@
 package cn.addenda.component.base.test.jackson;
 
+import cn.addenda.component.base.datetime.DateUtils;
 import cn.addenda.component.base.jackson.deserialzer.LocalDateTimeTsDeSerializer;
 import cn.addenda.component.base.jackson.serialzer.LocalDateTimeTsSerializer;
 import cn.addenda.component.base.jackson.util.JacksonUtils;
 import cn.addenda.component.base.jackson.util.TypeFactoryUtils;
+import cn.addenda.component.base.lambda.wrapper.AbstractCostedFunction;
 import cn.addenda.component.base.lambda.wrapper.CostedRunnable;
 import cn.addenda.component.base.lambda.wrapper.NamedRunnable;
 import cn.addenda.component.base.pojo.Binary;
@@ -114,9 +116,10 @@ public class JacksonUtilsTest {
 
       }
     });
-    CostedRunnable costedRunnable = CostedRunnable.of(namedRunnable);
+    LocalDateTime now = LocalDateTime.now();
+    CostedRunnable costedRunnable = CostedRunnable.of(now, AbstractCostedFunction.DEFAULT_THRESHOLD, namedRunnable);
     String str = JacksonUtils.toStr(costedRunnable);
-    Assert.assertEquals("{}", str);
+    Assert.assertEquals("{\"createDateTime\":\"" + DateUtils.format(now, DateUtils.yMdHmsS_FORMATTER) + "\",\"threshold\":200,\"queueSize\":null,\"poolSize\":null,\"activeCount\":null,\"runnable\":{\"name\":\"JacksonUtilsTest#test6\",\"runnable\":{}}}", str);
   }
 
   private static void testJsonPropertyOrder() {
