@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,6 +14,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SleepUtils {
+
+  public static void sleep(Duration duration) {
+    sleep(TimeUnit.MILLISECONDS, duration.toMillis(), false);
+  }
+
+  public static void sleep(Duration duration, boolean eatInterruptedFg) {
+    sleep(TimeUnit.MILLISECONDS, duration.toMillis(), eatInterruptedFg);
+  }
 
   public static void sleep(TimeUnit timeUnit, long timeout) {
     sleep(timeUnit, timeout, false);
