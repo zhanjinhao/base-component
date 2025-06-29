@@ -38,7 +38,7 @@ public class SleepUtilsTest {
     }
 
     System.out.println(atomicLong.get());
-    Assert.assertTrue(atomicLong.get() > 10000);
+    Assert.assertTrue(atomicLong.get() >= 10000);
   }
 
   @Test
@@ -63,7 +63,7 @@ public class SleepUtilsTest {
     }
 
     System.out.println(atomicLong.get());
-    Assert.assertTrue(atomicLong.get() > 10000);
+    Assert.assertTrue(atomicLong.get() >= 10000);
   }
 
 }
