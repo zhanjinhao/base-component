@@ -68,11 +68,9 @@ public abstract class AbstractCostedFunction {
     Supplier<String> msgSupplier;
     if (queueSize == null) {
       msgSupplier = () -> Slf4jUtils.format(
-              "{}[{}]: createDateTime[{}], startDateTime[{}], endDateTime[{}], totalCost[{}ms], runCost[{}ms]. ",
+              "{}[{}]: createDateTime[{}], endDateTime[{}], totalCost[{}ms]. ",
               functionType, functionName, DateUtils.format(createDateTime, DateUtils.yMdHmsS_FORMATTER),
-              DateUtils.format(startDateTime, DateUtils.yMdHmsS_FORMATTER),
-              DateUtils.format(endDateTime, DateUtils.yMdHmsS_FORMATTER),
-              totalCost, runCost);
+              DateUtils.format(endDateTime, DateUtils.yMdHmsS_FORMATTER), totalCost);
     } else {
       msgSupplier = () -> Slf4jUtils.format(
               "{}[{}]: createDateTime[{}], startDateTime[{}], endDateTime[{}], totalCost[{}ms], runCost[{}ms]. The state of the thread pool at the moment the task is submitted: queueSize[{}], poolSize[{}], activeCount[{}].",
