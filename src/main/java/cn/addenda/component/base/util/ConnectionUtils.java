@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -77,6 +78,11 @@ public class ConnectionUtils {
     connection.close();
   }
 
+  public static void close(PreparedStatement preparedStatement) throws SQLException {
+    assertPreparedStatement(preparedStatement);
+    preparedStatement.close();
+  }
+
   public static void rollback(Connection connection) throws SQLException {
     assertConnection(connection);
     connection.rollback();
@@ -93,6 +99,15 @@ public class ConnectionUtils {
     }
     if (connection.isClosed()) {
       throw new IllegalStateException("connection has been closed");
+    }
+  }
+
+  private static void assertPreparedStatement(PreparedStatement preparedStatement) throws SQLException {
+    if (preparedStatement == null) {
+      throw new IllegalStateException("preparedStatement is null");
+    }
+    if (preparedStatement.isClosed()) {
+      throw new IllegalStateException("preparedStatement has been closed");
     }
   }
 
