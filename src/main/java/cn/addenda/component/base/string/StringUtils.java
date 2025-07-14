@@ -134,4 +134,16 @@ public class StringUtils {
     return input.substring(start, end + 1);
   }
 
+  public static boolean isStrictlyNumeric(CharSequence cs) {
+    if (cs == null || cs.length() == 0) {
+      return false;
+    }
+    for (int i = 0; i < cs.length(); i++) {
+      if (!Character.isDigit(cs.charAt(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
 }
