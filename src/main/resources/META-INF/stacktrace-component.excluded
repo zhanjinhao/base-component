@@ -3,3 +3,4 @@
 #cn.addenda.component.base.lambda.wrapper.NamedFunction
 #cn.addenda.component.base.lambda.wrapper.NamedRunnable
 #cn.addenda.component.base.lambda.wrapper.NamedSupplier
+#cn.addenda.component.base.util.RetryUtils
