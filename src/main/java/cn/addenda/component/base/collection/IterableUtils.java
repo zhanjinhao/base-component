@@ -1,5 +1,6 @@
 package cn.addenda.component.base.collection;
 
+import cn.addenda.component.base.jackson.util.JacksonUtils;
 import cn.addenda.component.base.pojo.Ternary;
 import cn.addenda.component.base.util.Assert;
 import cn.addenda.component.stacktrace.StackTraceUtils;
@@ -342,7 +343,7 @@ public class IterableUtils {
 
 
   public static <T, P1> T oneOrNull(P1 p1, Function<P1, List<T>> function) {
-    return oneOrNull(p1, function, StackTraceUtils.getCallerInfo());
+    return oneOrNull(p1, function, (String) null);
   }
 
   public static <T, P1> T oneOrNull(P1 p1, Function<P1, List<T>> function, String callerInfo) {
@@ -350,8 +351,23 @@ public class IterableUtils {
     if (apply == null || apply.isEmpty()) {
       return null;
     }
+    if (callerInfo == null) {
+      callerInfo = StackTraceUtils.getCallerInfo();
+    }
     if (apply.size() > 1) {
-      throw new IllegalStateException(String.format("When invoking [%s], multi result of param[%s] are returned.", callerInfo, p1));
+      throw new IllegalStateException(
+              String.format("When invoking [%s], multi result[%s] of param[%s] are returned.",
+                      callerInfo, JacksonUtils.toStr(apply), p1));
+    }
+    return apply.get(0);
+  }
+
+  public static <T> T oneOrNull(List<T> apply, String callerInfo) {
+    if (apply == null || apply.isEmpty()) {
+      return null;
+    }
+    if (apply.size() > 1) {
+      throw new IllegalStateException(String.format("[%s]: multi result[%s]", callerInfo, JacksonUtils.toStr(apply)));
     }
     return apply.get(0);
   }
@@ -373,6 +389,10 @@ public class IterableUtils {
 
   public static <T> Stream<T> ofStream(Iterable<T> iterable) {
     return StreamSupport.stream(iterable.spliterator(), false);
+  }
+
+  public static <T> Stream<T> ofStream(Iterable<T> iterable, boolean parallel) {
+    return StreamSupport.stream(iterable.spliterator(), parallel);
   }
 
 }
