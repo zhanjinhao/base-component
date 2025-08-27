@@ -343,7 +343,7 @@ public class IterableUtils {
 
 
   public static <T, P1> T oneOrNull(P1 p1, Function<P1, List<T>> function) {
-    return oneOrNull(p1, function, (String) null);
+    return oneOrNull(p1, function, StackTraceUtils.getCallerInfo());
   }
 
   public static <T, P1> T oneOrNull(P1 p1, Function<P1, List<T>> function, String callerInfo) {
@@ -351,15 +351,16 @@ public class IterableUtils {
     if (apply == null || apply.isEmpty()) {
       return null;
     }
-    if (callerInfo == null) {
-      callerInfo = StackTraceUtils.getCallerInfo();
-    }
     if (apply.size() > 1) {
       throw new IllegalStateException(
               String.format("When invoking [%s], multi result[%s] of param[%s] are returned.",
                       callerInfo, JacksonUtils.toStr(apply), p1));
     }
     return apply.get(0);
+  }
+
+  public static <T> T oneOrNull(List<T> apply) {
+    return oneOrNull(apply, StackTraceUtils.getCallerInfo());
   }
 
   public static <T> T oneOrNull(List<T> apply, String callerInfo) {
