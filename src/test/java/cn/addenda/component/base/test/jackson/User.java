@@ -1,7 +1,7 @@
 package cn.addenda.component.base.test.jackson;
 
-import cn.addenda.component.base.jackson.deserialzer.LocalDateTimeTsDeSerializer;
-import cn.addenda.component.base.jackson.serialzer.LocalDateTimeTsSerializer;
+import cn.addenda.component.base.jackson.deserializer.LocalDateTimeTsDeSerializer;
+import cn.addenda.component.base.jackson.serializer.LocalDateTimeTsSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
